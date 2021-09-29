@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(BUILD_TESTS "Build tests" ON)
 option(BUILD_DOCS "Build documentation" OFF)
-option(BUILD_COVERAGE "Build code coverage" OFF)
+option(BUILD_COVERAGE "Build code coverage" ON)
 
 set(
   HUNTER_CACHE_SERVERS
@@ -20,9 +20,8 @@ HunterGate(
   SHA1 "95c47c92f68edb091b5d6d18924baabe02a6962a"
 )
 
-project(filesystem VERSION 0.1.0)
-string(APPEND CMAKE_CXX_FLAGS " -pedantic -Werror -Wall -Wextra")
-string(APPEND CMAKE_CXX_FLAGS " -Wno-unused-command-line-argument")
+project(acc_dir VERSION 0.1.0)
+string(APPEND CMAKE_CXX_FLAGS " -g -pedantic -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 
 hunter_add_package(GTest)
@@ -31,8 +30,10 @@ find_package(GTest CONFIG REQUIRED)
 hunter_add_package(Boost COMPONENTS system filesystem)
 find_package(Boost CONFIG REQUIRED system filesystem)
 
-add_executable(filesystem
+add_executable(${PROJECT_NAME}
   ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/sources/analyze.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/sources/misc.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -40,11 +41,10 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   "$<INSTALL_INTERFACE:include>"
 )
 
-target_link_libraries(filesystem Boost::filesystem Boost::system)
+target_link_libraries(${PROJECT_NAME} Boost::filesystem Boost::system)
 
 if(BUILD_TESTS)
   add_executable(tests
-    # TODO: enum your files and delete this comment
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
   )
   target_link_libraries(tests GTest::gtest_main)
@@ -73,7 +73,7 @@ endif()
 
 include(CPackConfig.cmake)
 
-install(TARGETS filesystem
+install(TARGETS ${PROJECT_NAME}
   RUNTIME DESTINATION bin
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
