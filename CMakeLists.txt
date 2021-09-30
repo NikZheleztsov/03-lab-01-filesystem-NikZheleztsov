@@ -33,6 +33,7 @@ find_package(Boost CONFIG REQUIRED system filesystem)
 add_executable(${PROJECT_NAME}
   ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/sources/analyze.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/sources/account.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/sources/misc.cpp
 )
 

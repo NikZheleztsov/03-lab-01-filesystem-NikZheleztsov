@@ -18,9 +18,13 @@ fs::path parse_cma(int argc, char* argv[])
 
         default:
             bool is_ok = false;
-            for (size_t i = 0; i < argc; ++i)
+            for (int i = 0; i < argc; ++i)
             {
-                if (std::string(argv[i]) == "-d") {
+                if (std::string(argv[i]) == "-h") {
+                    std::cout << "acc_dir [-d <dir_to_analyze> [-o <output_file]]\n";
+                    exit(0);
+
+                } else if (std::string(argv[i]) == "-d") {
                     path_to_ftp = fs::path(argv[i + 1]);
                     is_ok = true;
 
