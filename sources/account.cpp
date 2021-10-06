@@ -1,6 +1,6 @@
 /* Copyright 2021 Nikita Zheleztsov */
 
-#include "account.h"
+#include "./account.h"
 #include <chrono>
 #include <iomanip>
 #include <iostream>

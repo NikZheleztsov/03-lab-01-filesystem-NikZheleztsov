@@ -1,6 +1,6 @@
 /* Copyright 2021 Nikita Zheleztsov */
 
-#include "account.h"
+#include "./account.h"
 #include <boost/system/error_code.hpp>
 #include <boost/filesystem.hpp>
 #include <chrono>
@@ -21,7 +21,8 @@ void analyze_dir(fs::path path,
         if (fs::is_directory(entry) || fs::is_symlink(entry))
             analyze_dir(entry, acc_map);
 
-        else {
+        else 
+        {
             if (entry.path().filename().string().starts_with("balance") &&
                     entry.path().stem().extension().string() != ".old")
             {
@@ -31,8 +32,8 @@ void analyze_dir(fs::path path,
                 auto last_of = file_name.find_last_of("_");
 
                 if (first_of != last_of && first_of != std::string::npos &&
-                        last_of != std::string::npos)
-                {
+                        last_of != std::string::npos) {
+
                     uint32_t acc_num;
                     chrono::year_month_day ymd;
 
@@ -56,12 +57,12 @@ void analyze_dir(fs::path path,
 
                         if (!ymd.ok())
                             throw -1;
-
                     } catch (...) {
                         continue;
                     }
 
-                    std::string broker = entry.path().parent_path().filename().string();
+                    std::string broker = 
+                        entry.path().parent_path().filename().string();
                     *out << broker << ' ' << file_name << std::endl;
 
                     auto acc_num_iter = acc_map.find(acc_num);
@@ -75,10 +76,9 @@ void analyze_dir(fs::path path,
                             acc_num_iter->second.get_ymd() = ymd;
 
                     } else {
-                        Account acc (acc_num, broker, ymd, 1);
-                        acc_map.insert( {acc_num, acc} );
+                        Account acc(acc_num, broker, ymd, 1);
+                        acc_map.insert({acc_num, acc});
                     }
-
                 } else
                     continue;
             }

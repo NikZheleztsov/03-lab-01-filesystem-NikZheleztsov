@@ -11,7 +11,7 @@ extern std::unique_ptr<std::ostream> out;
 fs::path parse_cma(int argc, char* argv[])
 {
     fs::path path_to_ftp;
-    switch(argc)
+    switch (argc)
     {
         case 1:
             std::cout << "Analyzing current directory\n";
