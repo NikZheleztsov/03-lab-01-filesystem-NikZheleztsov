@@ -1,3 +1,5 @@
+/* Copyright 2021 Nikita Zheleztsov */
+
 #include "account.h"
 #include <boost/system/error_code.hpp>
 #include <boost/filesystem.hpp>
@@ -8,7 +10,6 @@
 
 namespace fs = boost::filesystem;
 namespace chrono = std::chrono;
-using namespace boost::system;
 
 extern std::unique_ptr<std::ostream> out;
 
@@ -21,7 +22,7 @@ void analyze_dir(fs::path path,
             analyze_dir(entry, acc_map);
 
         else {
-            if (entry.path().filename().string().starts_with("balance") && 
+            if (entry.path().filename().string().starts_with("balance") &&
                     entry.path().stem().extension().string() != ".old")
             {
                 std::string file_name = entry.path().filename().string();
@@ -42,21 +43,20 @@ void analyze_dir(fs::path path,
                             throw -1;
 
                         acc_num = std::stoul(
-                                file_name.substr(first_of + 1, 
+                                file_name.substr(first_of + 1,
                                     last_of - first_of + 1));
 
                         ymd = chrono::year_month_day(
                                 chrono::year(std::stoi(file_name.substr(
-                                        last_of + 1, 4))),
+                                            last_of + 1, 4))),
                                 chrono::month(std::stoi(file_name.substr(
-                                        last_of + 5, 2))),
+                                            last_of + 5, 2))),
                                 chrono::day(std::stoi(file_name.substr(
-                                        last_of + 7, 2)))
-                                );
+                                            last_of + 7, 2))) );
 
                         if (!ymd.ok())
                             throw -1;
-                            
+
                     } catch (...) {
                         continue;
                     }
@@ -76,7 +76,7 @@ void analyze_dir(fs::path path,
 
                     } else {
                         Account acc (acc_num, broker, ymd, 1);
-                        acc_map.insert({acc_num, acc});
+                        acc_map.insert( {acc_num, acc} );
                     }
 
                 } else

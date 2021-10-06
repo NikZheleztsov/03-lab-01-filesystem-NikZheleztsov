@@ -1,3 +1,5 @@
+/* Copyright 2021 Nikita Zheleztsov */
+
 #include "account.h"
 #include "analyze.h"
 #include <boost/filesystem.hpp>
@@ -36,8 +38,7 @@ int main (int argc, char* argv[])
     }
 
     // Summary info
-    if (!acc_map.empty())
-    {
+    if (!acc_map.empty()) {
         *out << "\nSummary:\n";
         for (auto acc : acc_map)
             *out << acc.second;
