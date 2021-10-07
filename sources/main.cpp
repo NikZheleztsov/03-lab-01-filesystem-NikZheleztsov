@@ -1,18 +1,20 @@
-#include "account.h"
-#include "analyze.h"
+/* Copyright 2021 Nikita Zheleztsov */
+
+#include "./account.h"
+#include "./analyze.h"
 #include <boost/filesystem.hpp>
 #include <string>
 #include <iostream>
 #include <map>
 #include <memory>
-#include "misc.h"
+#include "./misc.h"
 
 namespace fs = boost::filesystem;
 std::unique_ptr<std::ostream> out;
 
-int main (int argc, char* argv[])
+int main(int argc, char* argv[])
 {
-    // Parsing command line arguments 
+    // Parsing command line arguments
     fs::path path_to_ftp;
     try {
         path_to_ftp = parse_cma(argc, argv);
@@ -27,7 +29,6 @@ int main (int argc, char* argv[])
     std::map<uint32_t, Account> acc_map;
     if (fs::exists(path_to_ftp) && (fs::is_directory(path_to_ftp) ||
                 fs::is_symlink(path_to_ftp))) {
-
         analyze_dir(path_to_ftp, acc_map);
 
     } else {
@@ -36,8 +37,7 @@ int main (int argc, char* argv[])
     }
 
     // Summary info
-    if (!acc_map.empty())
-    {
+    if (!acc_map.empty()) {
         *out << "\nSummary:\n";
         for (auto acc : acc_map)
             *out << acc.second;
