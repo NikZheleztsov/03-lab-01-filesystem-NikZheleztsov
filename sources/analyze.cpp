@@ -21,7 +21,7 @@ void analyze_dir(fs::path path,
         if (fs::is_directory(entry) || fs::is_symlink(entry))
             analyze_dir(entry, acc_map);
 
-        else 
+        else
         {
             if (entry.path().filename().string().starts_with("balance") &&
                     entry.path().stem().extension().string() != ".old")
@@ -33,7 +33,6 @@ void analyze_dir(fs::path path,
 
                 if (first_of != last_of && first_of != std::string::npos &&
                         last_of != std::string::npos) {
-
                     uint32_t acc_num;
                     chrono::year_month_day ymd;
 
@@ -61,7 +60,7 @@ void analyze_dir(fs::path path,
                         continue;
                     }
 
-                    std::string broker = 
+                    std::string broker =
                         entry.path().parent_path().filename().string();
                     *out << broker << ' ' << file_name << std::endl;
 
@@ -79,8 +78,9 @@ void analyze_dir(fs::path path,
                         Account acc(acc_num, broker, ymd, 1);
                         acc_map.insert({acc_num, acc});
                     }
-                } else
+                } else {
                     continue;
+                }
             }
         }
     }

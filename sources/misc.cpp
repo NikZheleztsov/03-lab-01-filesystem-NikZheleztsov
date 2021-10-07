@@ -23,8 +23,8 @@ fs::path parse_cma(int argc, char* argv[])
             for (int i = 0; i < argc; ++i)
             {
                 if (std::string(argv[i]) == "-h") {
-                    std::cout << "acc_dir [-d\
- <dir_to_analyze> [-o <output_file]]\n";
+                    std::cout << R"(acc_dir [-d
+ <dir_to_analyze> [-o <output_file]])" << std::endl;
                     exit(0);
 
                 } else if (std::string(argv[i]) == "-d") {
